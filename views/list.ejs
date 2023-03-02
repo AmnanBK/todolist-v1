@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>To Do List</title>
-</head>
-<body>
-    <h1><%= day %></h1>
 
-    <ul>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+    <div class="box" id="heading">
+        <h1>
+            <%= day %>
+        </h1>
+    </div>
+
+    <div class="box">
         <% for(i=0; i<newItems.length; i++) { %>
-            <li> <%= newItems[i] %> </li>
+        <div class="item">
+            <input type="checkbox">
+                <p><%= newItems[i] %></p>
+            </div>
         <% } %>
 
-    </ul>
+        <form action="/" method="post" class="">
+            <input type="text" name="newItem" required placeholder="New Item" autocomplete="off">
+            <button type="submit" name="action" value="submit" class="submit">+</button>
+        </form>
+        <form action="/" method="post">
+            <button type="submit" name="action" value="reset" class="reset">Reset</button>
+        </form>
 
-    <form action="/" method="post">
-        <input type="text" name="newItem">
-        <button type="submit" name="action" value="submit">Submit</button>
-        <button type="submit" name="action" value="reset">Reset</button>
-    </form>
+    </div>
+
 
 </body>
+
 </html>

@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 const app = express()
 let items = []
 let workItems = []
+let pathNow = ["/", "/work"]
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"))
@@ -12,9 +13,7 @@ app.set("view engine", "ejs")
 
 app.get("/", function (req, res) {
     let today = new Date()
-    let pathNow = "root"
-    let actionValue = "/"
-    
+
     let options = {
         weekday: "long",
         day: "numeric",
@@ -23,42 +22,38 @@ app.get("/", function (req, res) {
 
     let titleList = today.toLocaleDateString("en-US", options)
 
-    res.render("list", { titleList: titleList, items: items, actionValue: actionValue ,pathNow: pathNow })
+    res.render("list", { titleList: titleList, items: items, actionValue: pathNow[0] })
 })
 
 app.post("/", function(req, res) {
     let action = req.body.action
-    let pathNow = "root"
 
-    if(action == "submit " + pathNow) {
+    if(action == "submit") {
         let item = req.body.newItem
         items.push(item)
     }
 
-    if(action == "reset " + pathNow) {
+    if(action == "reset") {
         items = []
     }
     res.redirect("/")
 })
 
 app.get("/work", function(req, res) {
-    let pathNow = "work"
     let titleList = "Work"
-    let actionValue = "/work"
 
-    res.render("list", { titleList: titleList, items: workItems, actionValue: actionValue ,pathNow: pathNow })
+    res.render("list", { titleList: titleList, items: workItems, actionValue: pathNow[1] })
 })
 
 app.post("/work", function(req, res) {
     let action = req.body.action
-    let pathNow = "work"
 
-    if(action == "submit " + pathNow) {
+    if(action == "submit") {
         let item = req.body.newItem
         workItems.push(item)
     }
 
-    if(action == "reset " + pathNow) {
+    if(action == "reset") {
         workItems = []
     }
     res.redirect("/work")
